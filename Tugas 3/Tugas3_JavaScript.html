@@ -3,11 +3,41 @@
 
 <head>
     <title>Tugas 3 JavaScript</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #eeeeee;
+        }
+    </style>
 </head>
 
 <body>
 
     <h2>Manajemen Produk Toko</h2>
+
+    <div id="daftarProduk"></div>
 
     <script>
 
@@ -35,14 +65,41 @@
         }
 
         function tampilkanProduk() {
-            console.log(produkToko);
+            let tabel = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            produkToko.forEach(function (produk) {
+                tabel += `
+                    <tr>
+                        <td>${produk.id}</td>
+                        <td>${produk.nama}</td>
+                        <td>Rp ${produk.harga.toLocaleString("id-ID")}</td>
+                        <td>${produk.stok}</td>
+                    </tr>
+                `;
+            });
+
+            tabel += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById("daftarProduk").innerHTML = tabel;
         }
 
         tampilkanProduk();
 
         tambahProduk("Headset", 500000, 8);
-
-        tampilkanProduk();
 
         hapusProduk(2);
 
