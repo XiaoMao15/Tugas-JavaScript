@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 4 JavaScript</title>
+</head>
+<body>
+
+    <h2>Sistem Manajemen Transportasi</h2>
+
+    <div id="daftarPelanggan"></div>
+
+    <script>
+
+        class Pelanggan {
+            constructor(nama, nomorTelepon) {
+                this.nama = nama;
+                this.nomorTelepon = nomorTelepon;
+                this.kendaraanDisewa = null;
+            }
+
+            sewaKendaraan(kendaraan) {
+                this.kendaraanDisewa = kendaraan;
+                console.log(`${this.nama} menyewa ${kendaraan}`);
+            }
+        }
+
+        let daftarPelanggan = [];
+
+        function tampilkanPelanggan() {
+            let tabel = `
+                <table border="1" cellpadding="10" cellspacing="0">
+                    <tr>
+                        <th>Nama</th>
+                        <th>Nomor Telepon</th>
+                        <th>Kendaraan Disewa</th>
+                    </tr>
+            `;
+
+            daftarPelanggan.forEach(function (pelanggan) {
+                if (pelanggan.kendaraanDisewa !== null) {
+                    tabel += `
+                        <tr>
+                            <td>${pelanggan.nama}</td>
+                            <td>${pelanggan.nomorTelepon}</td>
+                            <td>${pelanggan.kendaraanDisewa}</td>
+                        </tr>
+                    `;
+                }
+            });
+
+            tabel += `</table>`;
+
+            document.getElementById("daftarPelanggan").innerHTML = tabel;
+        }
+
+        let pelanggan1 = new Pelanggan("Budi", "081234567890");
+        pelanggan1.sewaKendaraan("Toyota Avanza");
+
+        let pelanggan2 = new Pelanggan("Andi", "082345678901");
+        pelanggan2.sewaKendaraan("Honda Brio");
+
+        let pelanggan3 = new Pelanggan("Citra", "083456789012");
+
+        daftarPelanggan.push(pelanggan1);
+        daftarPelanggan.push(pelanggan2);
+        daftarPelanggan.push(pelanggan3);
+
+        tampilkanPelanggan();
+
+    </script>
+
+</body>
+</html>
