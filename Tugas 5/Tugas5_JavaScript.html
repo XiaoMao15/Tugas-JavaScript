@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 5 JavaScript</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Manajemen Produk Toko</h2>
+
+    <div>
+        <input type="number" id="inputId" placeholder="ID">
+        <input type="text" id="inputNama" placeholder="Nama Produk">
+        <input type="number" id="inputHarga" placeholder="Harga">
+
+        <button id="btnTambah">Tambah Produk</button>
+        <button id="btnHapus">Hapus Produk ID 2</button>
+        <button id="btnTampil">Tampilkan Produk</button>
+    </div>
+
+    <div id="daftarProduk"></div>
+
+    <script>
+
+        // Data produk
+        let produkList = [
+            { id: 1, nama: "Laptop", harga: 12000000 },
+            { id: 2, nama: "Smartphone", harga: 5000000 },
+            { id: 3, nama: "Tablet", harga: 3000000 },
+            { id: 4, nama: "Headset", harga: 500000 },
+            { id: 5, nama: "Keyboard", harga: 350000 }
+        ];
+
+        // Tambah produk
+        function tambahProduk(id, nama, harga) {
+            produkList = [
+                ...produkList,
+                {
+                    id: id,
+                    nama: nama,
+                    harga: harga
+                }
+            ];
+
+            tampilkanProduk();
+        }
+
+        // Hapus produk
+        function hapusProduk(...ids) {
+            produkList = produkList.filter(function (produk) {
+                return !ids.includes(produk.id);
+            });
+
+            tampilkanProduk();
+        }
+
+        // Tampilkan produk
+        function tampilkanProduk() {
+
+            let tabel = `
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                    </tr>
+            `;
+
+            produkList.forEach(function (produk) {
+
+                const { id, nama, harga } = produk;
+
+                tabel += `
+                    <tr>
+                        <td>${id}</td>
+                        <td>${nama}</td>
+                        <td>Rp ${harga.toLocaleString("id-ID")}</td>
+                    </tr>
+                `;
+            });
+
+            tabel += `</table>`;
+
+            document.getElementById("daftarProduk").innerHTML = tabel;
+        }
+
+        // Event handler
+        const eventHandler = {
+
+            tambah: function () {
+                const id = Number(document.getElementById("inputId").value);
+                const nama = document.getElementById("inputNama").value;
+                const harga = Number(document.getElementById("inputHarga").value);
+
+                if (id && nama && harga) {
+                    tambahProduk(id, nama, harga);
+                }
+            },
+
+            hapus: function () {
+                hapusProduk(2);
+            },
+
+            tampil: function () {
+                tampilkanProduk();
+            }
+
+        };
+
+        // Event listener
+        document.getElementById("btnTambah").addEventListener("click", eventHandler.tambah);
+
+        document.getElementById("btnHapus").addEventListener("click", eventHandler.hapus);
+
+        document.getElementById("btnTampil").addEventListener("click", eventHandler.tampil);
+
+        // Tampilkan data awal
+        tampilkanProduk();
+
+    </script>
+
+</body>
+
+</html>
